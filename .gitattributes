@@ -1,0 +1,10 @@
+# Tell GitHub Linguist to ignore generated HTML/SVG reports
+*.html linguist-detectable=false
+*.html linguist-vendored
+*.html linguist-generated
+*.svg linguist-detectable=false
+*.svg linguist-vendored
+*.svg linguist-generated
+reports/** linguist-vendored
+reports/** linguist-generated
+reports/** linguist-detectable=false
