@@ -11,7 +11,6 @@
 [![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Holdout Hit Rate](https://img.shields.io/badge/Hit_Rate@5-84.00%25-2ea44f?style=for-the-badge)]()
 [![Inference Latency](https://img.shields.io/badge/Latency-%3C_45ms-blueviolet?style=for-the-badge)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 <br>
 
@@ -236,13 +235,5 @@ movieml/
 │   │   └── watched_movies.py            # User history retrieval
 │   └── scripts/
 │       └── login.py                     # User authentication
-├── requirements.txt                     # Dependency specifications
-├── README.md                            # Project documentation
-└── LICENSE                              # MIT License
+└── requirements.txt                     # Dependency specifications
 ```
-
----
-
-## 📜 License
-
-This project is open-source and licensed under the [MIT License](LICENSE).
