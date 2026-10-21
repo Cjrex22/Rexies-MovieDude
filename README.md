@@ -10,20 +10,30 @@ The current demo utilizes a pre-processed dataset of the top 6,000 [TMDB](https:
 [Setup Requirements](#setup-requirements)  |  [Workflow Sections](#workflow-sections)  |  [DataBase Structure](#database-structure) | [MovieDude on DeepWiki](https://deepwiki.com/a-partovii/MovieDude)
 
 ---
-### Setup Requirements:
+## 🚀 Quick Start (Run in 3 Steps)
 
-After installing `Python 3.x` you can install the required packages by running the following command in the terminal.<br>
-_- Using a virtual environment is recommended._
-
-```
-pip install pandas==2.3.3 scikit-learn==1.7.2 numpy==2.3.3 rich==14.2.0
+### Step 1: Open terminal in the project folder
+```bash
+cd movieml
 ```
 
-Alternatively, you can install all dependencies from the included `requirements.txt` file, simply open your terminal in the project directory and run:
-
-```
+### Step 2: Install required libraries (run once)
+```bash
 pip install -r requirements.txt
 ```
+*(Recommended: you can also create a virtual environment first: `python3 -m venv .venv && source .venv/bin/activate` on Mac/Linux or `.venv\Scripts\activate` on Windows)*
+
+### Step 3: Start the application
+```bash
+python3 src/main.py
+```
+*(On Windows, use `python src/main.py`)*
+
+### 🔑 Login Credentials:
+- **User ID:** `Aryan`
+- **Password:** `12345`
+
+*(Aryan's account is pre-configured with active ratings for instant personalized recommendations)*
 
 ---
 ### Workflow Sections:

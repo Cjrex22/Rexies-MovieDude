@@ -14,7 +14,7 @@ def login(db_file):
         user_id = input("Enter user ID: ").strip()
         password = input("Enter password: ").strip()
 
-        cursor.execute("SELECT * FROM Users WHERE user_id = ?", (user_id,))
+        cursor.execute("SELECT * FROM Users WHERE user_id = ? COLLATE NOCASE", (user_id,))
         user = cursor.fetchone()
 
         if not user:
@@ -25,4 +25,4 @@ def login(db_file):
             console.print(f"\n✅ Welcome, [yellow]{user['name']}[/yellow]")
             cursor.close()
             conn.close()
-            return user_id
+            return user['user_id']
