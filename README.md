@@ -1,132 +1,177 @@
-# MovieDude 🎬
-> **Hybrid Latent Movie Recommendation Engine Powered by Unsupervised K-Means Clustering, 2D PCA & Content-Collaborative Peer Fusion**
+<div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-ML%20Engine-orange.svg)](https://scikit-learn.org/)
-[![Database](https://img.shields.io/badge/Database-SQLite3-green.svg)](https://www.sqlite.org/)
-[![Architecture](https://img.shields.io/badge/Model-Hybrid%20K--Means%20%2B%20PCA-purple.svg)]()
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+# 🎬 MovieDude
+### Intelligent Latent Movie Recommendation Engine
+**Powered by Dual K-Means Clustering, 2D PCA Cartography & Content-Collaborative Fusion**
 
-MovieDude is an end-to-end, machine learning-driven movie recommendation platform that combines **Relational Database Design (SQLite)** with **Unsupervised Machine Learning**. Rather than relying on simple genre lookups, the system partitions both the movie catalog and the user interaction space into latent clusters, performing fine-grained **Cosine Similarity ranking** fused with **Peer Cohort Consensus**.
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Accuracy](https://img.shields.io/badge/Hit_Rate@5-84.0%25-brightgreen?style=for-the-badge)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+<p align="center">
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-machine-learning-architecture">ML Architecture</a> •
+  <a href="#-benchmarks--evaluation">Benchmarks</a> •
+  <a href="#-database-design">Database Design</a> •
+  <a href="#-cli-tour">CLI Tour</a>
+</p>
+
+</div>
 
 ---
 
-## 🚀 Quick Start (Run in 3 Steps)
+## 📌 Overview
 
-### Step 1: Open your terminal in the project folder
+**MovieDude** is a machine learning-driven movie recommendation platform combining an embedded **ACID-compliant SQLite relational database** with **Unsupervised Machine Learning**. 
+
+Rather than relying on naive genre matching or slow, un-indexed scans, MovieDude partitions both the 6,000+ film catalog and the 600+ user interaction space into latent clusters. Recommendations are ranked using **high-dimensional Cosine Similarity** fused with **Peer Cohort Consensus**, with interactive **2D PCA projection** for spatial visualization.
+
+---
+
+## 🚀 Quick Start
+
+Get MovieDude running in **3 simple steps**:
+
+### 1. Open Terminal in the project folder
 ```bash
 cd movieml
 ```
 
-### Step 2: Install dependencies (Run once)
+### 2. Install dependencies (Run once)
 ```bash
 pip install -r requirements.txt
 ```
-*(Recommended: Use a virtual environment: `python3 -m venv .venv && source .venv/bin/activate` on Mac/Linux or `.venv\Scripts\activate` on Windows)*
+> [!NOTE]
+> If you prefer a virtual environment:
+> - **macOS / Linux:** `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`
+> - **Windows:** `python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt`
 
-### Step 3: Launch the application
+### 3. Start the application
 ```bash
 python3 src/main.py
 ```
 *(On Windows, use `python src/main.py`)*
 
-### 🔑 Pre-Configured Login Credentials:
-- **User ID:** `Aryan`
-- **Password:** `12345`
+---
+
+### 🔑 Pre-Configured Login Accounts
+
+When prompted, log in with either of the following accounts:
+
+| User ID | Password | Purpose / Status |
+|:---:|:---:|---|
+| **`Aryan`** | `12345` | Clean profile ready to log movies & build a custom recommendation feed |
+| **`Churchil`** | `12345` | Clean profile ready to log movies & build a custom recommendation feed |
+
+---
+
+## ✨ Key Features
+
+- **Dual K-Means Clustering**: Partitions 6,000+ movies into $K=10$ latent item clusters and 600+ users into $K=6$ behavioral taste cohorts.
+- **Sub-50ms Candidate Pruning**: Filters search space to the user's active clusters, delivering instant recommendations.
+- **2D PCA Visualization**: Projects multi-dimensional movie and user topologies into an interactive HTML5 cartography map (`reports/movie_clusters_pca.html`).
+- **★ 7.5 Quality Gating**: Lukewarm or disliked movies are recorded in history but excluded from the taste centroid so they don't dilute recommendations.
+- **Franchise Deduplication**: Collapses sequels and spin-offs (e.g., *Toy Story 1, 2, 3*) so only the top-scoring entry occupies a recommendation slot.
+- **Typo & Accent-Proof Search**: Unicode diacritic stripping (`Bāhubali` $\rightarrow$ `Bahubali`) with fuzzy matching and multi-part disambiguation (*Drishyam*, *K.G.F*).
+- **Instant In-Memory Updates**: Adding a rating immediately invalidates cache and refreshes personalized recommendations with zero server downtime.
 
 ---
 
 ## 🧠 Machine Learning Architecture
 
 ```
-[User Interaction / Ratings in SQLite]
-               │
-               ▼
-   [Feature Engineering Layer]
-   ├── Multi-Hot Genre Vectors (19 genres)
-   ├── L2 Footprint Normalization (Equalizes multi-genre films)
-   └── TF-IDF Thematic Keywords
-               │
-               ├─────────────────────────────────────────┐
-               ▼                                         ▼
-   [Unsupervised Item Topology]              [Unsupervised User Topology]
-   • K-Means (K = 10 Clusters)               • K-Means (K = 6 Cohorts)
-   • Centroid: Lloyd's + K-Means++           • Aggregated User Vectors
-   • Inertia: 4,194.06                       • Silhouette Score: +0.1358
-   • Silhouette: +0.0636                                 │
-               │                                         │
-               ├────────────────────────┬────────────────┘
-               ▼                        ▼
-   [2D PCA Visualization Layer]    [Hybrid Scoring Engine]
-   • Eigen-decomposition of Cov.   • Quality Gate: r >= 7.5 only
-   • Item PC1+PC2: 11.77% var      • Weight: w_i = max(0.5, r_i - 6.5)
-   • Strictly for 2D HTML Cartography • S_final = 0.5 * Sim_content + 0.5 * Support_peer
-                                    • Franchise Deduplication (Max 1 per series)
-                                    • Monotonic Strictly Descending Sort
+   ┌────────────────────────────────────────────────────────┐
+   │         User Ratings & Watch History (SQLite)          │
+   └───────────────────────────┬────────────────────────────┘
+                               │
+                               ▼
+   ┌────────────────────────────────────────────────────────┐
+   │               Feature Engineering Layer                │
+   │  • 19 Multi-Hot Genres with L2 Footprint Normalization │
+   │  • TF-IDF Thematic Keywords & Plot Motifs              │
+   └─────────────┬────────────────────────────┬─────────────┘
+                 │                            │
+                 ▼                            ▼
+   ┌───────────────────────────┐┌───────────────────────────┐
+   │  Item Clustering (K = 10) ││  User Clustering (K = 6) │
+   │  • K-Means++ Centroids    ││  • Behavioral Cohorts    │
+   │  • Inertia: 4,194.06      ││  • Silhouette: +0.1358   │
+   │  • Silhouette: +0.0636    ││  • Peer Taste Groups     │
+   └─────────────┬─────────────┘└─────────────┬─────────────┘
+                 │                            │
+                 ├────────────────────────────┤
+                 ▼                            ▼
+   ┌───────────────────────────┐┌───────────────────────────┐
+   │  2D PCA Visualization     ││  Hybrid Recommendation    │
+   │  • Eigen-Decomposition    ││  • Gate: r >= 7.5 only    │
+   │  • Interactive HTML5 Map  ││  • Sim = 0.5*Content +    │
+   │  • Spatial Orientation    ││          0.5*Peer_Support │
+   │  (Inspection Only)        ││  • Franchise Deduplication│
+   └───────────────────────────┘└───────────────────────────┘
 ```
 
-### 1. High-Dimensional Feature Representation
-- **Multi-Hot Genre Encoding**: 19 distinct genres encoded into unit vectors.
-- **Per-Item L2 Footprint Normalization**: Prevents multi-genre films (e.g., Action+Adventure+Sci-Fi) from artificially overpowering single-genre artistic cinema.
-- **TF-IDF Keyword Weighting**: Penalizes ubiquitous words while surfacing distinctive narrative motifs (e.g., *police investigation*, *alibi*, *stockbroker*).
+### 1. High-Dimensional Vectorization & Footprint Normalization
+- **Multi-Hot Genre Vectors**: 19 distinct genres mapped to numerical coordinates.
+- **L2 Footprint Normalization**: Multi-genre titles (e.g., Action+Sci-Fi+Thriller+Crime) are normalized so they do not artificially overpower single-genre art films.
+- **TF-IDF Keyword Weighting**: High weights are assigned to distinctive story elements (*alibi*, *interrogation*, *stockbroker*) while filtering out ubiquitous filler words.
 
 ### 2. Dual K-Means Clustering
-- **Item Clustering ($K=10$)**: Automatically discovers 10 latent movie categories across 6,000+ films (e.g., Crime/Neo-Noir, Sci-Fi/Dystopia, Animation/Family, Inspiring Biographies).
-  - *Inertia (WCSS):* `4,194.06` | *Silhouette Score:* `+0.0636`
-- **User Cohort Clustering ($K=6$)**: Groups 600+ users into 6 distinct behavioral taste cohorts based on rating distribution patterns.
-  - *User Silhouette Score:* `+0.1358` (Demonstrates clean taste community boundaries).
+- **Item Space ($K=10$)**: Partitions movies into 10 semantic categories (Crime/Neo-Noir, Romance/Drama, Sci-Fi/Dystopia, Animation/Family, Biographies/History).
+- **User Space ($K=6$)**: Discovers 6 behavioral communities from 83,000+ interaction patterns (Silhouette: `+0.1358`).
 
 ### 3. Dimensionality Reduction (2D PCA)
-- Compresses high-dimensional item and user manifolds into 2D orthogonal coordinates using **Principal Component Analysis (PCA)**.
-- Generates an interactive HTML5 visualizer (`reports/movie_clusters_pca.html`) with interactive zoom, centroids, and hover inspection.
-- **Key Design Decision**: 2D PCA coordinates are used **strictly for visual inspection**. Recommendation ranking always runs in high-dimensional feature space to preserve 100% of information.
+- Compresses multi-dimensional item manifolds into 2D orthogonal coordinates via **Principal Component Analysis**.
+- > [!IMPORTANT]
+  > **2D PCA is used strictly for human visualization** (`reports/movie_clusters_pca.html`). Recommendation rankings are calculated on full high-dimensional feature vectors to prevent information loss.
 
 ### 4. Hybrid Scoring Formula
 $$S_{\text{final}}(u, m) = 0.5 \cdot \text{Sim}_{\text{content}}(\mathbf{u}, \mathbf{x}_m) + 0.5 \cdot \text{Support}_{\text{peer}}(c_u, m)$$
-- **Content Similarity**: Cosine similarity between candidate movie vector and the user's weighted taste centroid.
-- **Peer Cohort Support**: Normalized rating density from users inside the same K-Means taste cohort.
-- Results are sorted in **strict descending order**, clearly displaying `Final Rank Score`, `Content Sim`, and `Peer Cohort Support`.
 
-### 5. Smart Quality Gating & Diversity Safeguards
-- **$\ge 7.5$ Threshold Gate**: Only movies rated 7.5 or higher shape the user's taste centroid. Lukewarm or disliked movies are recorded in history but excluded from recommendations.
-- **Rating Power Weighting**: $w_i = \max(0.5, r_i - 6.5)$ ensures stronger favorites carry higher mathematical influence (e.g., 8.5 gets double the weight of 7.5).
-- **Franchise Deduplication**: Collapses sequels and spin-offs (e.g., *Toy Story 1, 2, 3*) so only the top-scoring entry occupies a recommendation slot.
-- **Multilingual Typo-Tolerant Search**: Strips unicode diacritics (`Bāhubali` $\rightarrow$ `Bahubali`), handles phonetic typos (`bhaubali 2`), and presents interactive version pickers for multi-part titles (*Drishyam*, *KGF*).
+- **$\text{Sim}_{\text{content}}$**: High-dimensional Cosine Similarity between candidate movie $\mathbf{x}_m$ and user taste centroid $\mathbf{u}$.
+- **$\text{Support}_{\text{peer}}$**: Consensus rating score among users in your K-Means peer cohort $c_u$.
+- **Strict Monotonic Ordering**: Recommended items are sorted in strictly descending order with detailed score breakdowns.
 
 ---
 
-## 📊 Offline Evaluation & Benchmarks
+## 📊 Benchmarks & Evaluation
 
 Evaluated on an **offline 80/20 train/test holdout benchmark across 100 real users** with zero data leakage:
 
-| Evaluation Metric | Top-5 ($K=5$) | Top-10 ($K=10$) | Plain-English Meaning |
-|---|---|---|---|
-| **Hit Rate@K** | **84.00%** | **84.00%** | 84 out of 100 holdout users found a movie they loved in Top-K. |
-| **Precision@K** | **49.60%** | **24.80%** | ~1 in 2 recommendations in Top-5 matched true holdout preferences. |
-| **Recall@K** | **12.82%** | **12.82%** | Proportion of total holdout items successfully retrieved. |
-| **Query Latency** | **< 0.045s** | **< 0.048s** | Sub-50ms inference time per recommendation query. |
+| Evaluation Metric | Top-5 ($K=5$) | Top-10 ($K=10$) | Meaning / Interpretation |
+|---|:---:|:---:|---|
+| **Hit Rate@K** | **84.00%** | **84.00%** | **84 out of 100 users** found a movie they loved in their top recommendations |
+| **Precision@K** | **49.60%** | **24.80%** | Nearly **1 in 2 recommended movies** matched actual holdout preferences |
+| **Recall@K** | **12.82%** | **12.82%** | Proportion of total test holdout items successfully retrieved |
+| **Query Latency** | **< 45 ms** | **< 48 ms** | Sub-50 millisecond inference time per user query |
 
 ---
 
-## 🗄️ Database Architecture (`MovieDude.db`)
+## 🗄️ Database Design
 
-The storage layer is backed by an embedded, ACID-compliant **SQLite3** relational database:
+The storage layer is an embedded **SQLite3** relational database (`database/MovieDude.db`):
 
 ```text
 MovieDude.db
-├── Movies_sorted (6,069 released films, metadata, keywords, ratings)
-├── Users_data    (83,911 user ratings, user_rate, liked boolean flag)
-└── Users         (User credentials, authentication, timestamps)
+├── Movies_sorted  (6,069 released films, metadata, keywords, ratings)
+├── Users_data     (83,911 user ratings, user_rate, liked boolean flag)
+└── Users          (User credentials, authentication, timestamps)
 ```
-- **Composite Primary Keys**: Enforces `(user_id, movie_id)` uniqueness.
-- **Atomic Upserts**: Uses `INSERT ... ON CONFLICT(user_id, movie_id) DO UPDATE` for instant, atomic profile saves without restarting the application.
-- **In-Memory Cache Invalidation**: Ratings changes automatically trigger cache eviction, guaranteeing zero-staleness recommendations.
+
+- **Composite Primary Keys**: `PRIMARY KEY (user_id, movie_id)` ensures data integrity.
+- **Atomic Upserts**: `INSERT ... ON CONFLICT DO UPDATE` allows immediate rating updates without table locks.
+- **Cache Management**: Database write events atomically evict the in-memory candidate cache, guaranteeing zero staleness.
 
 ---
 
-## 🖥️ Interactive CLI Features
+## 💻 CLI Tour
+
+Upon launching the application, you are greeted with an interactive 7-option menu:
 
 ```text
+--------------------------------------------------
 1 : Discover Movies Based on Your Activities (User Taste Clustering)
 2 : Find Similar Movies by Given Movie Title (Item Clustering & Latent Space)
 3 : Rate or Log a Movie
@@ -134,35 +179,38 @@ MovieDude.db
 5 : Explore Movie Clusters & PCA Visualizer (Interactive Latent Map)
 6 : Switch User / Log Out
 7 : Exit
+--------------------------------------------------
 ```
 
-- **Option 1**: Generates your personalized Top 10 recommendations with detailed match rationales and dual content/peer score breakdowns. Includes a diverse cold-start fallback for new users.
-- **Option 2**: Item-based similarity search inside the seed movie's K-Means cluster with franchise deduplication.
-- **Option 3**: Log any movie with a rating (1.0 to 10.0) and like/dislike flag with instant database persistence.
-- **Option 4**: View your watch history with color-coded seed tags (`[Seed: Rated ≥ 7.5]` vs `[Excluded: Rated < 7.5]`).
-- **Option 5**: Displays live K-Means metrics and automatically launches the interactive 2D PCA cluster map in your default web browser.
+- **`1` Discover Movies**: Generates personalized Top 10 recommendations with transparent score breakdowns (`Final Rank Score`, `Content Sim`, `Peer Cohort Support`). For new accounts, provides a diverse cold-start starter pack across all 10 clusters.
+- **`2` Find Similar Movies**: Input any movie (e.g. *Inception*, *La La Land*) to find similar films with franchise deduplication.
+- **`3` Rate or Log a Movie**: Search and rate any title from 1.0 to 10.0 stars with instant profile persistence.
+- **`4` View History**: Inspect all movies you have rated with color-coded seed tags (`[Seed: Rated ≥ 7.5]` vs `[Excluded: Rated < 7.5]`).
+- **`5` PCA Visualizer**: Inspect live clustering metrics and auto-launch the interactive 2D cluster map in your default web browser.
+- **`6` Switch User**: Log out and switch between profiles (`Aryan`, `Churchil`).
+- **`7` Exit**: Safely close the application.
 
 ---
 
-## 📁 Project Directory Structure
+## 📁 Project Structure
 
 ```text
 movieml/
 ├── database/
-│   └── MovieDude.db                     # SQLite database (6,069 movies, 83k ratings)
+│   └── MovieDude.db                     # SQLite database (6,069 films, 83k ratings)
 ├── reports/
 │   ├── movie_clusters_pca.html          # Interactive 2D PCA browser visualizer
 │   └── movie_clusters_pca.svg           # Vector PCA cluster graphic
 ├── src/
 │   ├── main.py                          # CLI application entry point
-│   ├── clustering_benchmark.py          # Full model evaluation & benchmark suite
+│   ├── clustering_benchmark.py          # Machine learning benchmark script
 │   ├── evaluation.py                    # Holdout cross-validation module
 │   ├── modules/
 │   │   ├── __init__.py
-│   │   ├── clustering.py                # Dual K-Means, 2D PCA & franchise deduplication
+│   │   ├── clustering.py                # K-Means clustering, PCA & franchise deduplication
 │   │   ├── engine.py                    # Hybrid recommendation engine
 │   │   ├── find_by_title.py             # Diacritic-safe search & version disambiguation
-│   │   ├── find_user_interests.py       # User taste vectorization & 7.5 threshold gating
+│   │   ├── find_user_interests.py       # Taste profiling & 7.5 rating threshold gating
 │   │   └── watched_movies.py            # User history retrieval
 │   └── scripts/
 │       └── login.py                     # User authentication
@@ -174,4 +222,5 @@ movieml/
 ---
 
 ## 📜 License
-This project is licensed under the [MIT License](LICENSE).
+
+This project is open-source and licensed under the [MIT License](LICENSE).
